@@ -1,6 +1,10 @@
 import discord as DC
 from discord.ext import commands
 
+async def enviar_con_gif(ctx, texto, imagen_url):
+    embed = DC.Embed(description=texto)
+    embed.set_image(url=imagen_url)
+    await ctx.send(embed=embed)
 
 #COMANDO PARA ENCENDER LA RADIO
 @commands.command()
@@ -21,6 +25,5 @@ async def radio(ctx):
         print("Fin de reproducción:", error if error else "sin errores")
 
     ctx.voice_client.play(DC.FFmpegPCMAudio(url, **opciones), after=al_terminar)
-    await ctx.send("voy a prender la radio...")
-    
-
+    await enviar_con_gif(ctx, "voy a prender la radio cariño...",
+                            "https://media.tenor.com/Of00Up8-_NEAAAAM/bayonetta-bayonetta-2.gif")

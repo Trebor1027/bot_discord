@@ -18,7 +18,7 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 # EVENTO DE CUANDO EL BOT ESTÁ LISTO
 @bot.event
 async def on_ready():
-    ruta = os.path.join(os.path.dirname(__file__), "imagenes", "bayonetta.txt")
+    ruta = os.path.join(os.path.dirname(__file__), "videos", "bayonetta.txt")
     try:
         with open(ruta, encoding="utf-8") as f:
             print(f.read())
@@ -45,7 +45,9 @@ bot.add_command(repetir)
 
 # COMANDO PARA UNIRSE A LA RADIO
 from radio.unirse_radio import unirse
+from radio.salir_radio import salir
 bot.add_command(unirse)
+bot.add_command(salir)
 
 
 # COMANDO PARA ENCENDER LA RADIO
@@ -54,18 +56,17 @@ bot.add_command(radio)
 
 
 # COMANDO PARA PAUSAR, REANUDAR Y SALIR DE LA RADIO
-from radio.funciones_radio import pausa, reanudar, salir
+from radio.funciones_radio import pausa, reanudar
 bot.add_command(pausa)
 bot.add_command(reanudar)
-bot.add_command(salir)
 
 
-#-----------------------IMAGENES----------------------
+#-----------------------VIDEOS----------------------
 
-#COMANDO PARA ENVIAR IMAGENES DE SALUDO, DESPEDIDA Y MEMES
-from imagenes.hola import hola_imagen
-from imagenes.adios import adios_imagen
-from imagenes.meme import meme_imagen
+#COMANDO PARA ENVIAR VIDEOS DE SALUDO, DESPEDIDA Y MEMES
+from videos.presentacion import hola_imagen
+from videos.adios import adios_imagen
+from videos.meme import meme_imagen
 
 @bot.event
 async def on_message(message):
@@ -75,8 +76,18 @@ async def on_message(message):
     await adios_imagen(message)
     await meme_imagen(message)
     await bot.process_commands(message)
+    
+
+#----------------------LIMPIAR CHAT----------------------
+
+#COMANDO PARA LIMPIAR EL CHAT CON !LIMPIAR
+from funciones_basicas.limpiar import limpiar
+bot.add_command(limpiar)
 
 
+#COMANDO PARA MOSTAR LOS COMANDOS DEL BOT
+from funciones_basicas.decir_comandos import comandos
+bot.add_command(comandos)
 
 #----------------------EJECUCION----------------------
 bot.run(os.environ["DISCORD_TOKEN"])
